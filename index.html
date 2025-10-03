@@ -52,6 +52,21 @@
       let retryCount = 0;
       const maxRetries = 10;
 
+      if (window.__TAURI__) {
+        window.__TAURI__.event.listen("update-ready", (event) => {
+          console.log("Update ready:", event.payload);
+          if (iframe.contentWindow) {
+            iframe.contentWindow.postMessage(
+              {
+                type: "UPDATE_READY",
+                version: event.payload,
+              },
+              "*"
+            );
+          }
+        });
+      }
+
       window.addEventListener("message", async (event) => {
         if (event.origin !== new URL(frontendUrl).origin) return;
 

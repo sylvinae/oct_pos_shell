@@ -39,6 +39,12 @@ async fn show_alert(title: String, message: String, app: tauri::AppHandle) -> Re
     Ok(format!("Alert shown: {} - {}", title, message))
 }
 
+#[tauri::command]
+fn restart_app(app: tauri::AppHandle) -> Result<String, String> {
+    app.restart();
+    Ok("Restarting app...".to_string())
+}
+
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
@@ -51,7 +57,8 @@ pub fn run() {
             get_platform,
             open_cash_drawer,
             print_receipt,
-            show_alert
+            show_alert,
+            restart_app
         ])
         .setup(|app| {
             #[cfg(desktop)]
@@ -73,9 +80,13 @@ pub fn run() {
 #[cfg(desktop)]
 async fn check_for_updates(app: tauri::AppHandle) -> Result<(), Box<dyn std::error::Error>> {
     use tauri_plugin_updater::UpdaterExt;
+    use tauri::Emitter;
     
     if let Some(update) = app.updater()?.check().await? {
+        let version = update.version.clone();
         let mut downloaded = 0;
+        
+        println!("Downloading update version {}...", version);
         
         update.download_and_install(
             |chunk_length, content_length| {
@@ -87,8 +98,9 @@ async fn check_for_updates(app: tauri::AppHandle) -> Result<(), Box<dyn std::err
             },
         ).await?;
         
-        println!("Update installed successfully!");
-        app.restart();
+        println!("Update {} installed successfully! Ready to restart.", version);
+        
+        let _ = app.emit("update-ready", version.to_string());
     }
     
     Ok(())
