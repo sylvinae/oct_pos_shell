@@ -13,7 +13,7 @@
     "withGlobalTauri": true,
     "windows": [
       {
-        "title": "OCT POS",
+        "title": "OCT POS - Pharmacy Management",
         "width": 1400,
         "height": 900,
         "minWidth": 1200,
