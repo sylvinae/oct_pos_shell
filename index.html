@@ -52,6 +52,44 @@
       let retryCount = 0;
       const maxRetries = 10;
 
+      window.addEventListener("message", async (event) => {
+        if (event.origin !== new URL(frontendUrl).origin) return;
+
+        if (event.data.type === "TAURI_CHECK") {
+          iframe.contentWindow.postMessage(
+            {
+              type: "TAURI_AVAILABLE",
+              available: !!window.__TAURI__,
+            },
+            event.origin
+          );
+        } else if (event.data.type === "TAURI_INVOKE" && window.__TAURI__) {
+          try {
+            const result = await window.__TAURI__.core.invoke(
+              event.data.cmd,
+              event.data.args
+            );
+            iframe.contentWindow.postMessage(
+              {
+                type: "TAURI_RESPONSE",
+                id: event.data.id,
+                result,
+              },
+              event.origin
+            );
+          } catch (error) {
+            iframe.contentWindow.postMessage(
+              {
+                type: "TAURI_ERROR",
+                id: event.data.id,
+                error: error.toString(),
+              },
+              event.origin
+            );
+          }
+        }
+      });
+
       function checkFrontend() {
         fetch(frontendUrl)
           .then(() => {
