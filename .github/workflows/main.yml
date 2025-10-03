@@ -9,8 +9,15 @@ jobs:
   build-macos:
     runs-on: macos-latest
     steps:
-      - name: Checkout
+      - name: Checkout shell repo
         uses: actions/checkout@v3
+
+      - name: Checkout frontend repo
+        uses: actions/checkout@v3
+        with:
+          repository: karllarkzs/pos-ozamis
+          path: pos-frontend
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
@@ -20,7 +27,15 @@ jobs:
         with:
           node-version: 18
 
-      - name: Install dependencies
+      - name: Install frontend dependencies
+        working-directory: ./pos-frontend
+        run: npm install
+
+      - name: Build frontend
+        working-directory: ./pos-frontend
+        run: npm run build
+
+      - name: Install shell dependencies
         run: npm install
 
       - name: Build & Publish (macOS)
@@ -29,7 +44,7 @@ jobs:
           tagName: ${{ github.ref_name }}
           releaseName: "Release ${{ github.ref_name }}"
           releaseBody: "Automatic release for version ${{ github.ref_name }}"
-          updaterJson: true
+          includeUpdaterJson: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAURI_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
@@ -38,8 +53,15 @@ jobs:
   build-windows:
     runs-on: windows-latest
     steps:
-      - name: Checkout
+      - name: Checkout shell repo
         uses: actions/checkout@v3
+
+      - name: Checkout frontend repo
+        uses: actions/checkout@v3
+        with:
+          repository: karllarkzs/pos-ozamis
+          path: pos-frontend
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
@@ -49,7 +71,15 @@ jobs:
         with:
           node-version: 18
 
-      - name: Install dependencies
+      - name: Install frontend dependencies
+        working-directory: ./pos-frontend
+        run: npm install
+
+      - name: Build frontend
+        working-directory: ./pos-frontend
+        run: npm run build
+
+      - name: Install shell dependencies
         run: npm install
 
       - name: Build & Publish (Windows)
@@ -58,7 +88,7 @@ jobs:
           tagName: ${{ github.ref_name }}
           releaseName: "Release ${{ github.ref_name }}"
           releaseBody: "Automatic release for version ${{ github.ref_name }}"
-          updaterJson: true
+          includeUpdaterJson: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAURI_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
