@@ -9,15 +9,8 @@ jobs:
   build-macos:
     runs-on: macos-latest
     steps:
-      - name: Checkout shell repo
+      - name: Checkout
         uses: actions/checkout@v3
-
-      - name: Checkout frontend repo
-        uses: actions/checkout@v3
-        with:
-          repository: karllarkzs/pos-ozamis
-          path: pos-frontend
-          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
@@ -27,15 +20,7 @@ jobs:
         with:
           node-version: 18
 
-      - name: Install frontend dependencies
-        working-directory: ./pos-frontend
-        run: npm install
-
-      - name: Build frontend
-        working-directory: ./pos-frontend
-        run: npm run build
-
-      - name: Install shell dependencies
+      - name: Install dependencies
         run: npm install
 
       - name: Build & Publish (macOS)
@@ -53,15 +38,8 @@ jobs:
   build-windows:
     runs-on: windows-latest
     steps:
-      - name: Checkout shell repo
+      - name: Checkout
         uses: actions/checkout@v3
-
-      - name: Checkout frontend repo
-        uses: actions/checkout@v3
-        with:
-          repository: karllarkzs/pos-ozamis
-          path: pos-frontend
-          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
@@ -71,15 +49,7 @@ jobs:
         with:
           node-version: 18
 
-      - name: Install frontend dependencies
-        working-directory: ./pos-frontend
-        run: npm install
-
-      - name: Build frontend
-        working-directory: ./pos-frontend
-        run: npm run build
-
-      - name: Install shell dependencies
+      - name: Install dependencies
         run: npm install
 
       - name: Build & Publish (Windows)
