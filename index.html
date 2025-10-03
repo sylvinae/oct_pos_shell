@@ -64,10 +64,10 @@
           .catch(() => {
             retryCount++;
             if (retryCount < maxRetries) {
-              loading.textContent = `Connecting to frontend... (${retryCount}/${maxRetries})`;
+              loading.textContent = `Connecting to server... (${retryCount}/${maxRetries})`;
               setTimeout(checkFrontend, 2000);
             } else {
-              loading.textContent = `Cannot connect to frontend at ${frontendUrl}. Please ensure the frontend server is running.`;
+              loading.textContent = `Cannot connect to server.`;
               loading.style.color = "#d32f2f";
             }
           });
