@@ -36,5 +36,13 @@
       "icons/icon.icns",
       "icons/icon.ico"
     ]
+  },
+  "plugins": {
+    "updater": {
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDJDOEZFMkFFRUFGQzQyQzEKUldUQlF2enFydUtQTEJjTlRaYjZsTG11YjZOWDk0NEl3VGM4a2F0bnJsS2FNTHdTOFVBNVhHRGgK",
+      "endpoints": [
+        "https://github.com/sylvinae/oct_pos_shell/releases/latest/download/latest.json"
+      ]
+    }
   }
 }
