@@ -5,6 +5,9 @@ on:
     tags:
       - "v*.*.*" # Triggers only when you push a version tag like v1.0.0
 
+permissions:
+  contents: write
+
 jobs:
   build-macos:
     runs-on: macos-latest
