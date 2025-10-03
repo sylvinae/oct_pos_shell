@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -10,7 +10,9 @@
         padding: 0;
         box-sizing: border-box;
       }
-      html, body, #app {
+      html,
+      body,
+      #app {
         width: 100%;
         height: 100%;
         overflow: hidden;
@@ -34,27 +36,28 @@
   </head>
   <body>
     <div id="loading">Loading OCT POS...</div>
-    <iframe 
-      id="app" 
+    <iframe
+      id="app"
       src="http://localhost:5173"
-      style="width: 100%; height: 100%; border: none;"
+      style="width: 100%; height: 100%; border: none"
       allow="clipboard-read; clipboard-write"
     ></iframe>
     <!-- IMPORTANT: Before building for production, change the src above to your deployed frontend URL -->
     <!-- Example: src="https://your-frontend.netlify.app" -->
     <script type="module" src="/src/main.ts"></script>
     <script>
-      const iframe = document.getElementById('app');
-      const loading = document.getElementById('loading');
-      
+      const iframe = document.getElementById("app");
+      const loading = document.getElementById("loading");
+
       iframe.onload = () => {
-        loading.style.display = 'none';
-        iframe.classList.add('loaded');
+        loading.style.display = "none";
+        iframe.classList.add("loaded");
       };
-      
+
       iframe.onerror = () => {
-        loading.textContent = 'Error loading application. Please check your connection.';
-        loading.style.color = '#d32f2f';
+        loading.textContent =
+          "Error loading application. Please check your connection.";
+        loading.style.color = "#d32f2f";
       };
     </script>
   </body>
