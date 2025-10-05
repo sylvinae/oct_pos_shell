@@ -23,8 +23,14 @@ jobs:
         with:
           node-version: 18
 
+      - name: Setup Yarn
+        run: npm install -g yarn
+
       - name: Install dependencies
-        run: npm install
+        run: yarn install
+
+      - name: Build frontend shell
+        run: yarn build
 
       - name: Build & Publish (macOS)
         uses: tauri-apps/tauri-action@v0
@@ -52,8 +58,14 @@ jobs:
         with:
           node-version: 18
 
+      - name: Setup Yarn
+        run: npm install -g yarn
+
       - name: Install dependencies
-        run: npm install
+        run: yarn install
+
+      - name: Build frontend shell
+        run: yarn build
 
       - name: Build & Publish (Windows)
         uses: tauri-apps/tauri-action@v0
