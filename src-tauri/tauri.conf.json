@@ -1,29 +1,38 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "OCT POS",
-  "version": "1.0.10",
-  "identifier": "com.yourcompany.pharmacy-pos",
+  "productName": "Pharmacy POS",
+  "version": "1.1.0",
+  "identifier": "com.stealth.pharmacy-pos",
   "build": {
     "beforeDevCommand": "",
-    "devUrl": "http://localhost:5173",
-    "beforeBuildCommand": "",
+    "devUrl": "https://oct-pharmacy.netlify.app/",
+    "beforeBuildCommand": "yarn build",
     "frontendDist": "../dist"
   },
   "app": {
     "withGlobalTauri": true,
     "windows": [
       {
-        "title": "OCT POS - Pharmacy Management",
+        "label": "main",
+        "title": "Pharmacy POS",
+        "url": "https://oct-pharmacy.netlify.app/",
         "width": 1400,
         "height": 900,
-        "minWidth": 1200,
-        "minHeight": 700,
+        "minWidth": 1280,
+        "minHeight": 720,
         "resizable": true,
         "center": true
       }
     ],
     "security": {
-      "csp": null
+      "csp": null,
+      "assetProtocol": {
+        "scope": [
+          "https://oct-pharmacy.netlify.app/**",
+          "https://oct-back-oct-2025.onrender.com/**"
+        ]
+      },
+      "capabilities": ["main"]
     }
   },
   "bundle": {

@@ -1,14 +1,16 @@
 {
+  "identifier": "main",
+  "description": "Permissions for the main window and remote content",
+  "windows": ["main"],
   "permissions": [
     "core:default",
     "core:app:default",
     "core:event:default",
     "core:window:default",
-    "core:path:default",
+    "core:webview:default",
+    "http:default",
     "dialog:default",
-    "opener:default"
-  ],
-  "platforms": ["linux", "macOS", "windows"],
-  "windows": ["main"],
-  "identifier": "main-capability"
+    "opener:default",
+    "updater:default"
+  ]
 }
