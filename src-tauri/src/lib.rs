@@ -318,7 +318,7 @@ fn generate_test_receipt() -> String {
 fn print_raw_data_windows(printer_name: &str, data: &[u8], doc_name: &str) -> Result<(), String> {
     use std::ffi::c_void;
     use std::ptr::null_mut;
-    use windows::core::PCWSTR;
+    use windows::core::{PCWSTR, PWSTR};
     use windows::Win32::Foundation::HANDLE;
     use windows::Win32::Graphics::Printing::{
         ClosePrinter, EndDocPrinter, EndPagePrinter, OpenPrinterW, StartDocPrinterW,
@@ -347,12 +347,12 @@ fn print_raw_data_windows(printer_name: &str, data: &[u8], doc_name: &str) -> Re
         let datatype_w = to_wide("RAW");
 
         let mut doc_info = DOC_INFO_1W {
-            pDocName: PCWSTR::from_raw(doc_name_w.as_ptr()),
-            pOutputFile: PCWSTR::null(),
-            pDatatype: PCWSTR::from_raw(datatype_w.as_ptr()),
+            pDocName: PWSTR(doc_name_w.as_ptr() as *mut u16),
+            pOutputFile: PWSTR::null(),
+            pDatatype: PWSTR(datatype_w.as_ptr() as *mut u16),
         };
 
-        let job_id = StartDocPrinterW(handle, 1, &mut doc_info as *mut _ as *mut c_void);
+        let job_id = StartDocPrinterW(handle, 1, &doc_info);
         if job_id == 0 {
             ClosePrinter(handle);
             return Err(format!(
