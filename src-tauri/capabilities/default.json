@@ -8,8 +8,6 @@
     "opener:default",
     "updater:default",
     "updater:allow-check",
-    "updater:allow-download-and-install",
-    "http:default",
-    "http:allow-fetch"
+    "updater:allow-download-and-install"
   ]
 }
