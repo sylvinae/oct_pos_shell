@@ -329,13 +329,7 @@ fn print_raw_data_windows(printer_name: &str, data: &[u8], doc_name: &str) -> Re
         let printer_w = to_wide(printer_name);
         let mut handle = HANDLE::default();
 
-        if !OpenPrinterW(
-            PCWSTR::from_raw(printer_w.as_ptr()),
-            &mut handle,
-            null_mut(),
-        )
-        .as_bool()
-        {
+        if OpenPrinterW(PCWSTR::from_raw(printer_w.as_ptr()), &mut handle, None).is_err() {
             return Err(format!(
                 "Failed to open printer {}: {}",
                 printer_name,
